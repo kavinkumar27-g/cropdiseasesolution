@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search - {{ app_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-search"></i> Search Diseases</h1>
+            <p>Find specific plant diseases and their treatments</p>
+        </header>
+
+        <nav class="navigation">
+            <a href="{{ url_for('index') }}" class="nav-link">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="{{ url_for('database') }}" class="nav-link">
+                <i class="fas fa-database"></i> Browse Diseases
+            </a>
+            <a href="{{ url_for('add_disease') }}" class="nav-link">
+                <i class="fas fa-plus"></i> Add Disease
+            </a>
+        </nav>
+
+        <main class="main-content">
+            <div class="search-section">
+                <form action="{{ url_for('search') }}" method="post" class="search-form">
+                    <div class="search-input-group">
+                        <input type="text" 
+                               name="query" 
+                               value="{{ query }}"
+                               placeholder="Enter disease name..."
+                               class="search-input"
+                               required>
+                        <button type="submit" class="search-button">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            {% if query %}
+                <div class="search-results">
+                    <h2><i class="fas fa-list"></i> Search Results for "{{ query }}"</h2>
+                    
+                    {% if diseases %}
+                        <p class="results-count">Found {{ diseases|length }} disease(s)</p>
+                        
+                        {% for disease in diseases %}
+                            <div class="disease-card">
+                                <div class="disease-name">
+                                    <i class="fas fa-bug"></i> {{ disease.name|title }}
+                                </div>
+                                <div class="disease-description">
+                                    {{ disease.description }}
+                                </div>
+                                
+                                <div class="solutions-list">
+                                    <h4><i class="fas fa-pills"></i> Treatment Solutions:</h4>
+                                    {% for solution in disease.solutions %}
+                                        <div class="solution-item {{ solution.type }}">
+                                            <div class="solution-type">
+                                                {% if solution.type == 'organic' %}
+                                                    <i class="fas fa-leaf"></i> Organic Solution
+                                                {% else %}
+                                                    <i class="fas fa-flask"></i> Inorganic Solution
+                                                {% endif %}
+                                            </div>
+                                            <div class="solution-text">{{ solution.solution }}</div>
+                                            <div class="solution-meta">
+                                                <span><i class="fas fa-star"></i> {{ solution.effectiveness }}</span>
+                                                <span><i class="fas fa-info-circle"></i> {{ solution.application }}</span>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-results">
+                            <i class="fas fa-search-minus"></i>
+                            <h3>No diseases found</h3>
+                            <p>No diseases matching "{{ query }}" were found in the database.</p>
+                            <div class="suggestions">
+                                <h4>Try searching for:</h4>
+                                <ul>
+                                    <li>powdery mildew</li>
+                                    <li>blight</li>
+                                    <li>rust</li>
+                                    <li>aphid</li>
+                                    <li>black spot</li>
+                                </ul>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% else %}
+                <div class="search-help">
+                    <h2><i class="fas fa-lightbulb"></i> Search Tips</h2>
+                    <div class="tips-grid">
+                        <div class="tip-card">
+                            <i class="fas fa-search"></i>
+                            <h3>Search by Name</h3>
+                            <p>Enter the disease name like "powdery mildew" or "blight"</p>
+                        </div>
+                        <div class="tip-card">
+                            <i class="fas fa-spell-check"></i>
+                            <h3>Partial Matches</h3>
+                            <p>You can search with partial names like "mildew" or "spot"</p>
+                        </div>
+                        <div class="tip-card">
+                            <i class="fas fa-case-sensitive"></i>
+                            <h3>Case Insensitive</h3>
+                            <p>Search is not case sensitive - "RUST" and "rust" work the same</p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 {{ app_name }}. Simple, effective plant disease management.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

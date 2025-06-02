@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👤 User Profile - AI Crop Diseases Solution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .header {
+            background: #ffffff;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .nav-links {
+            position: absolute;
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: #059669;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: #047857;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
+        }
+
+        .user-info {
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .welcome-text {
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: #dc2626;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #059669;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #059669, #047857);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-username {
+            color: #6b7280;
+            font-size: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #059669;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .activity-list {
+            space-y: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 0.75rem;
+        }
+
+        .activity-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .activity-date {
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .activity-duration {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .activity-pages {
+            color: #059669;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #6b7280;
+            font-style: italic;
+            padding: 2rem;
+        }
+
+        .time-badge {
+            background: #dcfce7;
+            color: #166534;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links, .user-info {
+                position: static;
+                transform: none;
+                justify-content: center;
+                margin: 1rem 0;
+            }
+            
+            .header {
+                padding: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <!-- Navigation Links -->
+        <div class="nav-links">
+            <a href="{% url 'plants:index' %}" class="nav-link">
+                <i class="fas fa-home"></i>Home
+            </a>
+            <a href="{% url 'plants:database' %}" class="nav-link">
+                <i class="fas fa-database"></i>Database
+            </a>
+        </div>
+
+        <!-- User Info -->
+        <div class="user-info">
+            <span class="welcome-text">
+                <i class="fas fa-user"></i> {{ user.first_name|default:user.username }}
+            </span>
+            <a href="{% url 'plants:logout' %}" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>Logout
+            </a>
+        </div>
+        
+        <div class="logo">
+            <i class="fas fa-user-circle"></i> User Profile
+        </div>
+        <div class="subtitle">Your Activity & Statistics</div>
+    </div>
+
+    <div class="container">
+        <div class="profile-grid">
+            <!-- Profile Info -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        {% if user.first_name %}
+                            {{ user.first_name.0|upper }}{% if user.last_name %}{{ user.last_name.0|upper }}{% endif %}
+                        {% else %}
+                            <i class="fas fa-user"></i>
+                        {% endif %}
+                    </div>
+                    <div class="profile-name">
+                        {% if user.first_name or user.last_name %}
+                            {{ user.first_name|default:"" }} {{ user.last_name|default:"" }}
+                        {% else %}
+                            {{ user.username|title }}
+                        {% endif %}
+                    </div>
+                    <div class="profile-username">@{{ user.username }}</div>
+                </div>
+
+                <!-- User Details Section -->
+                <div style="margin-bottom: 2rem; padding: 1rem; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <h3 style="color: #1f2937; margin-bottom: 1rem; font-size: 1rem; font-weight: 600;">
+                        <i class="fas fa-info-circle"></i> Account Details
+                    </h3>
+                    <div style="space-y: 0.5rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="color: #6b7280; font-size: 0.875rem;">
+                                <i class="fas fa-envelope"></i> Email:
+                            </span>
+                            <span style="color: #1f2937; font-weight: 500; font-size: 0.875rem;">
+                                {{ user.email|default:"Not provided" }}
+                            </span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="color: #6b7280; font-size: 0.875rem;">
+                                <i class="fas fa-user-tag"></i> Full Name:
+                            </span>
+                            <span style="color: #1f2937; font-weight: 500; font-size: 0.875rem;">
+                                {% if user.first_name or user.last_name %}
+                                    {{ user.first_name|default:"" }} {{ user.last_name|default:"" }}
+                                {% else %}
+                                    Not provided
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="color: #6b7280; font-size: 0.875rem;">
+                                <i class="fas fa-calendar-plus"></i> Joined:
+                            </span>
+                            <span style="color: #1f2937; font-weight: 500; font-size: 0.875rem;">
+                                {{ user.date_joined|date:"M d, Y" }}
+                            </span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="color: #6b7280; font-size: 0.875rem;">
+                                <i class="fas fa-clock"></i> Last Login:
+                            </span>
+                            <span style="color: #1f2937; font-weight: 500; font-size: 0.875rem;">
+                                {% if user.last_login %}
+                                    {{ user.last_login|date:"M d, Y - H:i" }}
+                                {% else %}
+                                    Never
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="color: #6b7280; font-size: 0.875rem;">
+                                <i class="fas fa-shield-alt"></i> Account Status:
+                            </span>
+                            <span style="color: #059669; font-weight: 500; font-size: 0.875rem;">
+                                {% if user.is_active %}
+                                    <i class="fas fa-check-circle"></i> Active
+                                {% else %}
+                                    <i class="fas fa-times-circle"></i> Inactive
+                                {% endif %}
+                            </span>
+                        </div>
+                        {% if user.is_superuser %}
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="color: #6b7280; font-size: 0.875rem;">
+                                <i class="fas fa-crown"></i> Role:
+                            </span>
+                            <span style="color: #dc2626; font-weight: 500; font-size: 0.875rem;">
+                                <i class="fas fa-star"></i> Administrator
+                            </span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">{{ profile.total_visits }}</div>
+                        <div class="stat-label">Total Visits</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{{ total_sessions }}</div>
+                        <div class="stat-label">Sessions</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{{ total_time_formatted }}</div>
+                        <div class="stat-label">Total Time</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{{ avg_session_duration }}</div>
+                        <div class="stat-label">Avg Session</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                    <p style="color: #6b7280; font-size: 0.875rem;">
+                        <i class="fas fa-calendar"></i> Member since {{ member_since|date:"M d, Y" }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="profile-card">
+                <h2 class="section-title">
+                    <i class="fas fa-clock"></i>Recent Activity
+                </h2>
+
+                <!-- Today's Activity -->
+                <div style="margin-bottom: 1rem; padding: 1rem; background: #f0fdf4; border-radius: 8px; border: 1px solid #bbf7d0;">
+                    <h3 style="color: #166534; margin-bottom: 0.75rem; font-size: 1rem;">
+                        <i class="fas fa-calendar-day"></i> Today's Activity
+                    </h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #059669;">{{ today_sessions }}</div>
+                            <div style="font-size: 0.875rem; color: #6b7280;">Sessions</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #059669;">{{ today_time_formatted }}</div>
+                            <div style="font-size: 0.875rem; color: #6b7280;">Time Spent</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weekly Summary -->
+                <div style="margin-bottom: 1.5rem; padding: 1rem; background: #f0f9ff; border-radius: 8px; border: 1px solid #bae6fd;">
+                    <h3 style="color: #0369a1; margin-bottom: 0.75rem; font-size: 1rem;">
+                        <i class="fas fa-chart-line"></i> Last 7 Days Summary
+                    </h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <span style="color: #374151; font-weight: 500;">{{ recent_sessions }} total sessions</span>
+                        <span class="time-badge">{{ recent_time_formatted }}</span>
+                    </div>
+
+                    <!-- Daily Activity Breakdown -->
+                    <div style="space-y: 0.5rem;">
+                        {% for day in daily_activity %}
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: {% if day.has_activity %}#ffffff{% else %}#f8fafc{% endif %}; border-radius: 6px; margin-bottom: 0.5rem;">
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div style="font-weight: 500; color: {% if day.has_activity %}#1f2937{% else %}#9ca3af{% endif %}; min-width: 80px;">
+                                        {{ day.day_name }}
+                                    </div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">
+                                        {{ day.date }}
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    {% if day.has_activity %}
+                                        <span style="font-size: 0.875rem; color: #059669; font-weight: 500;">
+                                            {{ day.sessions }} session{{ day.sessions|pluralize }}
+                                        </span>
+                                        <span style="font-size: 0.875rem; color: #374151; font-weight: 500;">
+                                            {{ day.time_spent }}
+                                        </span>
+                                    {% else %}
+                                        <span style="font-size: 0.875rem; color: #9ca3af; font-style: italic;">
+                                            No activity
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Session History -->
+                <div style="margin-bottom: 1rem;">
+                    <h3 style="color: #1f2937; margin-bottom: 1rem; font-size: 1rem; font-weight: 600;">
+                        <i class="fas fa-history"></i> Recent Sessions
+                    </h3>
+                </div>
+
+                <div class="activity-list">
+                    {% if sessions %}
+                        {% for session in sessions %}
+                            <div class="activity-item" style="{% if session.is_recent %}border-left: 4px solid #059669;{% endif %}">
+                                <div class="activity-info">
+                                    <div class="activity-date">
+                                        <i class="fas fa-calendar-day"></i>
+                                        {{ session.session_start|date:"M d, Y - H:i" }}
+                                        {% if session.is_recent %}
+                                            <span style="background: #dcfce7; color: #166534; padding: 0.125rem 0.5rem; border-radius: 12px; font-size: 0.75rem; margin-left: 0.5rem;">
+                                                {{ session.relative_time }}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="activity-duration">
+                                        <i class="fas fa-clock"></i>
+                                        Duration: {{ session.duration_formatted|default:"Active" }}
+                                        {% if session.duration > 0 %}
+                                            {% if session.duration >= 1800 %}
+                                                <span style="color: #059669; font-weight: 500;"> • Long session</span>
+                                            {% elif session.duration >= 600 %}
+                                                <span style="color: #0369a1; font-weight: 500;"> • Good session</span>
+                                            {% elif session.duration >= 60 %}
+                                                <span style="color: #7c3aed; font-weight: 500;"> • Quick session</span>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="activity-pages">
+                                    <i class="fas fa-eye"></i>
+                                    {{ session.pages_visited }} page{{ session.pages_visited|pluralize }}
+                                    {% if session.pages_visited >= 10 %}
+                                        <span style="color: #059669; font-size: 0.75rem;"> • Active</span>
+                                    {% elif session.pages_visited >= 5 %}
+                                        <span style="color: #0369a1; font-size: 0.75rem;"> • Engaged</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        {% if sessions|length >= 10 %}
+                            <div style="text-align: center; padding: 1rem; color: #6b7280; font-size: 0.875rem;">
+                                <i class="fas fa-info-circle"></i>
+                                Showing last 10 sessions. Total sessions: {{ total_sessions }}
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <div class="no-data">
+                            <i class="fas fa-seedling"></i>
+                            <div style="margin-top: 0.5rem;">
+                                <strong>Welcome to AI Crop Diseases Solution!</strong>
+                            </div>
+                            <div style="margin-top: 0.25rem; font-size: 0.875rem;">
+                                Start exploring the app to see your activity here.
+                            </div>
+                            <div style="margin-top: 1rem;">
+                                <a href="{% url 'plants:index' %}" style="color: #059669; text-decoration: none; font-weight: 500;">
+                                    <i class="fas fa-search"></i> Search for crop diseases
+                                </a>
+                                <span style="margin: 0 0.5rem; color: #d1d5db;">•</span>
+                                <a href="{% url 'plants:database' %}" style="color: #059669; text-decoration: none; font-weight: 500;">
+                                    <i class="fas fa-database"></i> Browse database
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-refresh page every 30 seconds to update current session time
+        setTimeout(function() {
+            location.reload();
+        }, 30000);
+    </script>
+</body>
+</html>

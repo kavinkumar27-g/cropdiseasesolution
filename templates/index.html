@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>� AI Crop Diseases Solution - Smart Agricultural Health Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 50%, #ffd3a5 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background particles */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .particle {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: slideDown 1s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #2e7d32, #388e3c, #4caf50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            color: #2e7d32;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .search-section {
+            background: linear-gradient(135deg, #81c784, #66bb6a);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(129, 199, 132, 0.3);
+            border: 3px solid #4caf50;
+        }
+
+        .search-title {
+            color: #fff;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+
+
+        .search-box {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .input-group {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4CAF50;
+            font-size: 1.2rem;
+            z-index: 3;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px 15px 15px 50px;
+            border: none;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(76, 175, 80, 0.3);
+            background: #fff;
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, #ff7043, #ff5722);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 112, 67, 0.4);
+            border: 2px solid #ff5722;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 112, 67, 0.5);
+            background: linear-gradient(135deg, #ff5722, #e64a19);
+        }
+
+        .search-btn:active {
+            transform: translateY(0px);
+        }
+
+        .search-btn i {
+            margin-right: 8px;
+        }
+
+        .error {
+            color: #FF6B6B;
+            font-weight: 500;
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #FF6B6B;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .results {
+            margin-top: 30px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .results-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .results-title i {
+            color: #4CAF50;
+            margin-right: 10px;
+        }
+
+        .disease-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .disease-image-container {
+            flex-shrink: 0;
+        }
+
+        .disease-image {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .disease-image:hover {
+            transform: scale(1.05);
+        }
+
+        .disease-details {
+            text-align: center;
+        }
+
+        .disease-badge {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .disease-badge i {
+            margin-right: 8px;
+        }
+
+        .disease-description {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 400px;
+            margin-bottom: 15px;
+        }
+
+
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .solution-card {
+            background: #fff;
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .solution-card.organic {
+            border-color: #81c784;
+            background: linear-gradient(135deg, #f1f8e9, #e8f5e8);
+        }
+
+        .solution-card.inorganic {
+            border-color: #ffab91;
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+        }
+
+        .solution-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .card-header h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-header i {
+            font-size: 1.2rem;
+            color: #4CAF50;
+        }
+
+        .eco-badge, .inorganic-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .eco-badge {
+            background: #66bb6a;
+            color: white;
+            border: 2px solid #4caf50;
+        }
+
+        .inorganic-badge {
+            background: #ff7043;
+            color: white;
+            border: 2px solid #ff5722;
+        }
+
+        .solution-gallery {
+            display: grid;
+            gap: 20px;
+        }
+
+        .solution-item {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+            animation: slideInLeft 0.5s ease-out both;
+            margin-bottom: 15px;
+        }
+
+        .solution-item:hover {
+            border-color: #81c784;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(129, 199, 132, 0.2);
+        }
+
+        .solution-content {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .solution-image {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 10px;
+            flex-shrink: 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .solution-text {
+            flex: 1;
+        }
+
+        .solution-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .solution-title i {
+            color: #4CAF50;
+            font-size: 0.9rem;
+        }
+
+        .solution-details {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .effectiveness-badge, .application-info {
+            font-size: 0.85rem;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-weight: 500;
+        }
+
+        .effectiveness-badge {
+            background: #81c784;
+            color: white;
+            border: 1px solid #66bb6a;
+        }
+
+        .application-info {
+            background: #e3f2fd;
+            color: #1976d2;
+            border: 1px solid #bbdefb;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .search-box {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .input-group {
+                min-width: auto;
+            }
+
+            .search-btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .solutions-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .search-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated background -->
+    <div class="bg-animation"></div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">� AI Crop Diseases Solution</div>
+        <div class="subtitle">Smart Agricultural Health Platform</div>
+    </div>
+
+    <div class="container">
+        <div class="search-section">
+            <h2 class="search-title">
+                <i class="fas fa-search"></i> Find Crop Disease Solutions
+            </h2>
+            <div class="search-box">
+                <div class="input-group">
+                    <i class="fas fa-leaf input-icon"></i>
+                    <input type="text" id="diseaseName" placeholder="Enter crop disease name (e.g. blight, rust, aphid)">
+                </div>
+                <button id="searchBtn" class="search-btn">
+                    <i class="fas fa-search"></i>Search
+                </button>
+            </div>
+            <div id="errorMsg" class="error"></div>
+        </div>
+
+        <div id="results" class="results" style="display: none;">
+            <div class="results-header">
+                <h2 class="results-title">
+                    <i class="fas fa-check-circle"></i> <span id="diseaseTitle"></span> Solutions
+                </h2>
+                <div class="disease-info">
+                    <div class="disease-image-container">
+                        <img id="diseaseImage" src="" alt="Disease Image" class="disease-image">
+                    </div>
+                    <div class="disease-details">
+                        <p id="diseaseDescription" class="disease-description"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="solutions-grid">
+                <div class="solution-card organic">
+                    <div class="card-header">
+                        <i class="fas fa-leaf"></i>
+                        <h3>Organic Solutions</h3>
+                        <span class="eco-badge">🌱 Organic</span>
+                    </div>
+                    <div id="organicSolutions" class="solution-gallery"></div>
+                </div>
+
+                <div class="solution-card inorganic">
+                    <div class="card-header">
+                        <i class="fas fa-flask"></i>
+                        <h3>Inorganic Solutions</h3>
+                        <span class="inorganic-badge">⚡ Fast</span>
+                    </div>
+                    <div id="inorganicSolutions" class="solution-gallery"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create animated background particles
+        function createParticles() {
+            const bgAnimation = document.querySelector('.bg-animation');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                bgAnimation.appendChild(particle);
+            }
+        }
+
+        // Initialize particles
+        createParticles();
+
+        // Enhanced search functionality
+        document.getElementById('searchBtn').addEventListener('click', performSearch);
+        document.getElementById('diseaseName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        function performSearch() {
+            const disease = document.getElementById('diseaseName').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+            const results = document.getElementById('results');
+            const searchBtn = document.getElementById('searchBtn');
+
+            if (!disease) {
+                showError('Please enter a disease name');
+                return;
+            }
+
+            // Show loading state
+            searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>Searching...';
+            searchBtn.disabled = true;
+            hideError();
+
+            fetch('/search', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ disease: disease.toLowerCase() })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                // Update disease information with animation
+                document.getElementById('diseaseTitle').textContent = data.disease.toUpperCase();
+                document.getElementById('diseaseDescription').textContent = data.description;
+
+                // Update disease image
+                const diseaseImage = document.getElementById('diseaseImage');
+                if (data.image) {
+                    diseaseImage.src = data.image;
+                    diseaseImage.style.display = 'block';
+                } else {
+                    diseaseImage.style.display = 'none';
+                }
+
+                // Populate solutions with images and animations
+                populateSolutionsWithImages('organicSolutions', data.solutions.organic);
+                populateSolutionsWithImages('inorganicSolutions', data.solutions.inorganic);
+
+                // Show results with animation
+                results.style.display = 'block';
+                results.style.animation = 'slideUp 0.6s ease-out';
+
+                hideError();
+            })
+            .catch(error => {
+                showError(error.message);
+                results.style.display = 'none';
+            })
+            .finally(() => {
+                // Reset button state
+                searchBtn.innerHTML = '<i class="fas fa-search"></i>Search Solutions';
+                searchBtn.disabled = false;
+            });
+        }
+
+        function populateSolutionsWithImages(elementId, solutions) {
+            const gallery = document.getElementById(elementId);
+            gallery.innerHTML = '';
+
+            solutions.forEach((solution, index) => {
+                const solutionItem = document.createElement('div');
+                solutionItem.className = 'solution-item';
+                solutionItem.style.animationDelay = (index * 0.1) + 's';
+
+                solutionItem.innerHTML = `
+                    <div class="solution-content">
+                        <img src="${solution.image}" alt="Solution Image" class="solution-image"
+                             onerror="this.style.display='none'">
+                        <div class="solution-text">
+                            <div class="solution-title">
+                                <i class="fas fa-check-circle"></i>
+                                ${solution.solution}
+                            </div>
+                            <div class="solution-details">
+                                <span class="effectiveness-badge">
+                                    <i class="fas fa-star"></i> ${solution.effectiveness}
+                                </span>
+                                <span class="application-info">
+                                    <i class="fas fa-info-circle"></i> ${solution.application}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                gallery.appendChild(solutionItem);
+            });
+        }
+
+        function showError(message) {
+            const errorMsg = document.getElementById('errorMsg');
+
+            let friendlyMessage = message;
+            if (message.includes('Disease not found')) {
+                friendlyMessage = "Disease not found. Try: blight, rust, aphid, or powdery mildew";
+            } else if (message.includes('Please enter')) {
+                friendlyMessage = "Please enter a disease name";
+            }
+
+            errorMsg.textContent = friendlyMessage;
+            errorMsg.classList.add('show');
+        }
+
+        function hideError() {
+            const errorMsg = document.getElementById('errorMsg');
+            errorMsg.classList.remove('show');
+        }
+    </script>
+</body>
+</html>

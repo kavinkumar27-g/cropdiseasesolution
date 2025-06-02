@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ app_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-seedling"></i> {{ app_name }}</h1>
+            <p>Find solutions for crop diseases quickly and easily</p>
+        </header>
+
+        <nav class="navigation">
+            <a href="{{ url_for('index') }}" class="nav-link active">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="{{ url_for('database') }}" class="nav-link">
+                <i class="fas fa-database"></i> Browse Diseases
+            </a>
+            <a href="{{ url_for('add_disease') }}" class="nav-link">
+                <i class="fas fa-plus"></i> Add Disease
+            </a>
+        </nav>
+
+        <main class="main-content">
+            <div class="search-section">
+                <h2><i class="fas fa-search"></i> Search for Plant Diseases</h2>
+                <form action="{{ url_for('search') }}" method="post" class="search-form">
+                    <div class="search-input-group">
+                        <input type="text" 
+                               name="query" 
+                               placeholder="Enter disease name (e.g., powdery mildew, blight, rust...)"
+                               class="search-input"
+                               required>
+                        <button type="submit" class="search-button">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="features-section">
+                <h2><i class="fas fa-star"></i> Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-leaf feature-icon"></i>
+                        <h3>Organic Solutions</h3>
+                        <p>Natural, eco-friendly treatment options for sustainable farming</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-flask feature-icon"></i>
+                        <h3>Inorganic Solutions</h3>
+                        <p>Chemical treatments for quick and effective disease control</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-chart-line feature-icon"></i>
+                        <h3>Effectiveness Ratings</h3>
+                        <p>Clear ratings to help you choose the best treatment option</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-instructions feature-icon"></i>
+                        <h3>Application Guide</h3>
+                        <p>Step-by-step instructions for proper treatment application</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-links">
+                <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+                <div class="quick-links-grid">
+                    <a href="{{ url_for('database') }}" class="quick-link">
+                        <i class="fas fa-database"></i>
+                        <span>Browse All Diseases</span>
+                        <small>View complete database</small>
+                    </a>
+                    <a href="{{ url_for('add_disease') }}" class="quick-link">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Add New Disease</span>
+                        <small>Contribute to database</small>
+                    </a>
+                    <a href="{{ url_for('search') }}" class="quick-link">
+                        <i class="fas fa-search-plus"></i>
+                        <span>Advanced Search</span>
+                        <small>Detailed search options</small>
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 {{ app_name }}. Simple, effective plant disease management.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
